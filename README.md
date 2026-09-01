@@ -4,6 +4,20 @@ Manuales para instalar AutoFirma en Bazzite (y en general cualquier distro
 inmutable basada en Fedora, como Silverblue o Kinoite), con dos enfoques
 distintos y completamente probados. Elige el que mejor se adapte a ti.
 
+## Recomendación
+
+**Distrobox es el método recomendado.** Es un paquete 100% oficial y nativo
+(el mismo `.deb` que publica el Gobierno), evita el sandboxing entre
+aplicaciones que causa la mayoría de problemas con la vía Flatpak (almacén
+NSS como "puente" obligatorio, permisos cruzados con `flatpak override`), y
+es coherente con el mismo enfoque usado para CachyOS: evitar capas de
+aislamiento y priorizar el software nativo. El único coste es que las
+actualizaciones son manuales en vez de automáticas.
+
+La vía Flatpak sigue documentada y funciona igual de bien una vez
+configurada — es una alternativa válida si prefieres actualizaciones
+automáticas y no te importan unos pasos extra de configuración inicial.
+
 ## Métodos disponibles
 
 - **[`flatpak/`](./flatpak/)** — instalación vía Flatpak (`es.gob.afirma`
