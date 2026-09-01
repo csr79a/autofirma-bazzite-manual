@@ -1,47 +1,35 @@
-# AutoFirma en Bazzite — Instalación vía contenedor Distrobox
+# AutoFirma en Bazzite — Dos métodos de instalación
 
-Manual para instalar AutoFirma en Bazzite (y en general cualquier distro
-inmutable basada en Fedora, como Silverblue o Kinoite) usando un contenedor
-Distrobox con Ubuntu, instalando el paquete `.deb` **oficial y nativo** del
-Gobierno de España dentro del contenedor.
+Manuales para instalar AutoFirma en Bazzite (y en general cualquier distro
+inmutable basada en Fedora, como Silverblue o Kinoite), con dos enfoques
+distintos y completamente probados. Elige el que mejor se adapte a ti.
 
-## Por qué este método y no Flatpak
+## Métodos disponibles
 
-- **Paquete 100% oficial y nativo**, el mismo `.deb` que publica el Gobierno
-  para cualquier Ubuntu/Debian — sin avisos de "no verificado" de Flathub.
-- **Menos pasos frágiles.** La vía Flatpak necesita usar un almacén NSS como
-  "puente" obligatorio entre AutoFirma y el navegador, y dar permisos
-  cruzados entre apps con `flatpak override`, porque Flatpak aísla cada
-  aplicación de las demás incluso con acceso general al sistema de archivos.
-  Con un contenedor, ese aislamiento no existe, y la configuración es más
-  directa.
-- Validado con doble verificación: firma real comprobada con `pdfsig` y en
-  [valide.redsara.es](https://valide.redsara.es/), y también con el test
-  automático independiente del Ministerio de Trabajo.
+- **[`flatpak/`](./flatpak/)** — instalación vía Flatpak (`es.gob.afirma`
+  desde Flathub). Actualizaciones automáticas, pero requiere más pasos de
+  configuración por el sandboxing entre aplicaciones de Flatpak.
+- **[`distrobox/`](./distrobox/)** — instalación del paquete `.deb` oficial
+  dentro de un contenedor Distrobox con Ubuntu. Paquete 100% nativo, menos
+  pasos frágiles, pero el mantenimiento (actualizar a una versión nueva) es
+  manual.
 
-## Contenido
+## ¿Cuál elegir?
 
-- [`Manual_AutoFirma_Bazzite_Distrobox.md`](./Manual_AutoFirma_Bazzite_Distrobox.md) —
-  guía completa paso a paso, pensada para alguien sin conocimientos previos:
-  desde crear el contenedor Distrobox, instalar el paquete oficial, exportarlo
-  al menú de aplicaciones del host, configurar el almacén de certificados NSS,
-  hasta la verificación final firmando y validando un documento real. Incluye
-  una tabla comparativa con la vía Flatpak.
+| Aspecto | Flatpak | Distrobox |
+|---|---|---|
+| Origen del paquete | Flathub (`es.gob.afirma`) | `.deb` oficial del Gobierno |
+| Actualizaciones | Automáticas | Manuales (repetir instalación del `.deb`) |
+| Aislamiento entre apps | Sí (requiere `flatpak override` y almacén NSS como "puente") | No |
+| Complejidad de configuración | Media-alta (varios puntos de fallo posibles) | Media (más directo) |
+| Instalación inicial | Un solo comando (`flatpak install`) | Varios pasos (crear contenedor, instalar `.deb`, exportar) |
 
-## Resumen rápido
-
-1. Crear el contenedor: `distrobox create --name autofirma-box --image ubuntu:24.04`
-2. Instalar el `.deb` oficial de AutoFirma dentro del contenedor
-3. Exportarlo al menú de aplicaciones del host: `distrobox-export --app autofirma`
-4. Crear el almacén NSS con contraseña en blanco e importar certificado
-   personal + CAs de la FNMT
-5. Confiar en el certificado de comunicación de AutoFirma desde Firefox y
-   Brave, ya en el host
-6. Verificar firmando desde el navegador y validando en
-   [valide.redsara.es](https://valide.redsara.es/valide/firmar/ejecutar.html)
-
-Ver [`Manual_AutoFirma_Bazzite_Distrobox.md`](./Manual_AutoFirma_Bazzite_Distrobox.md)
-para todos los detalles y solución de problemas.
+Ambos métodos están completamente documentados, probados de punta a punta
+(firma real verificada con `pdfsig` y en
+[valide.redsara.es](https://valide.redsara.es/), además del test
+independiente del Ministerio de Trabajo), y llevan a un resultado
+funcionalmente idéntico: AutoFirma firmando y validando correctamente desde
+el navegador y de forma manual.
 
 ## Repo relacionado
 
